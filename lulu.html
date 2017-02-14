@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="gbk">
+		<title>个性化拼图</title>
+		<style type="text/css">
+			table{border-collapse:collapse;}
+			td, #box_4_0{border:1px solid #888; width:240px; height:240px;}
+			td{width:240px; height:240px;}
+		</style>
+		<script type="text/javascript">
+			function init(){
+				//alert("1");
+				var html=[];
+				html.push("<table>");
+				for(var i=0; i < 4; i++){
+					html.push("<tr>");
+					for(var j=0; j < 4; j++){
+						var top="-"+160*j+"px";
+						//alert(top);
+						var left="-"+160*i+"px";
+						html.push('<td id="box_' + i + "_" + j + '" style="background: url(lulu.jpg) '+top+' '+left+';"></td>');
+					}
+					html.push("</tr>");
+				}
+				html.push("</table>");
+				html.push('<div id="box_4_0"></div>');
+				var pannel=document.getElementById("pannel");
+				pannel.innerHTML=html.join("");
+				document.getElementById("box_4_0").style.background=document.getElementById("box_3_0").style.background;
+				document.getElementById("box_3_0").style.background="";
+			}
+			
+			function move(){
+				switch(event.keyCode){
+					case 37:
+						left();
+						break;
+					case 38:
+						up();
+						break;
+					case 39:
+						rigth();
+						break;
+					case 40:
+						down();
+						break;
+					default:
+						break;
+				}
+				success();
+			}
+			function left(){
+				for(var i=0; i < 4; i++){
+					for(var j=0; j < 3; j++){
+						var inner = document.getElementById("box_"+i+"_"+j).style.background;
+						if(!inner){
+							document.getElementById("box_"+i+"_"+j).style.background=document.getElementById("box_"+i+"_"+(j+1)).style.background;
+							document.getElementById("box_"+i+"_"+(j+1)).style.background="";
+							return;
+						}
+					}
+				}
+			}
+			function up(){
+				for(var i=0; i < 4; i++){
+					for(var j=0; (j < 4 && i < 4) || (i==3 && j==0); j++){
+						var inner = document.getElementById("box_"+i+"_"+j).style.background;
+						if(!inner){
+							document.getElementById("box_"+i+"_"+j).style.background=document.getElementById("box_"+(i+1)+"_"+j).style.background;
+							document.getElementById("box_"+(i+1)+"_"+j).style.background="";
+							return;
+						}
+					}
+				}
+			}
+			function right(){
+				for(var i=0; i < 4; i++){
+					for(var j=1; j < 4; j++){
+						var inner = document.getElementById("box_"+i+"_"+j).style.background;
+						if(!inner){
+							document.getElementById("box_"+i+"_"+j).style.background=document.getElementById("box_"+i+"_"+(j-1)).style.background;
+							document.getElementById("box_"+i+"_"+(j-1)).style.background="";
+							return;
+						}
+					}
+				}
+			}
+			function down(){			
+				for(var i=0; i < 5; i++){
+					for(var j=0; (j < 4 && i < 4) || (i==4 && j==0); j++){
+						var inner = document.getElementById("box_"+i+"_"+j).style.background;
+						if(!inner && i-1>=0){
+							document.getElementById("box_"+i+"_"+j).style.background=document.getElementById("box_"+(i-1)+"_"+j).style.background;
+							document.getElementById("box_"+(i-1)+"_"+j).style.background="";
+							return;
+						}
+					}
+				}
+			}
+			function success(){
+				if(!document.getElementById("box_4_0").style.background){
+					for(var i=0; i < 4; i++){
+						for(var j=0; j < 4; j++){
+							var x = document.getElementById("box_"+i+"_"+j).style.backgroundPositionX;
+							var y = document.getElementById("box_"+i+"_"+j).style.backgroundPositionY;
+							console.log(x);
+							if(x==(j*(-160)+"px") && y==(i*(-160)+"px")){
+								continue;
+							}else{
+								return;
+							}
+						}
+					}
+					setTimeout(function(){alert("祝陆露2017年身体健康！天天开心！")},0);
+					//alert("成功");
+				}				
+			}
+			var startX=0;
+			var startY=0;
+			var endX=0;
+			var endY=0;
+			function startabc(ev){
+				startX=ev.touches[0].clientX;
+				startY=ev.touches[0].clientY;
+				divStart.innerHTML='Touch start('+ev.touches[0].clientX+', '+ev.touches[0].clientY+')';
+				ev.preventDefault();  //阻止出现滚动条 
+			}
+			function endabc(ev){
+				//alert("touchend");
+				endX=ev.changedTouches[0].clientX;
+				endY=ev.changedTouches[0].clientY;						
+				divEnd.innerHTML='Touch end('+ev.changedTouches[0].clientX+', '+ev.changedTouches[0].clientY+')'; 
+				doAction();
+			}
+			function doAction(){
+				if(startX > endX && (startX-endX) > Math.abs(startY-endY)){
+					left();
+				}
+				if(startY > endY && (startY-endY) > Math.abs(startX-endX)){
+					up();
+				}
+				if(startX < endX && (endX-startX) > Math.abs(startY-endY)){
+					right();
+				}
+				if(startY < endY && (endY-startY) > Math.abs(startX-endX)){
+					down();
+				}
+				success();	
+			}
+			document.addEventListener('touchstart',startabc,false); 
+			document.addEventListener('touchend',endabc,false); 
+			//document.addEventListener('touchmove',touches,false); 
+			function startGame(){
+				for(var i=0;i<20;i++){
+					var box1 = "box_"+makeRandom()+"_"+makeRandom();
+					var box2 = "box_"+makeRandom()+"_"+makeRandom();
+					var box = document.getElementById("box1").style.background;
+					document.getElementById("box1").style.background=document.getElementById("box2").style.background;
+					document.getElementById("box2").style.background=box;
+				}			
+			}
+			function makeRandom(){
+				return document.write(parseInt(4*Math.random()));
+			}
+		</script>
+	</head>
+	<body onload="init()">
+		<div id="pannel"></div>
+		<div id="divStart"></div> 
+		<div id="divMove"></div>
+		<div id="divEnd"></div>
+		<!--<input type="button" value="开始" onclick="startGame()">-->
+	</body>
+</html>
