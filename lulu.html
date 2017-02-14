@@ -16,9 +16,9 @@
 				for(var i=0; i < 4; i++){
 					html.push("<tr>");
 					for(var j=0; j < 4; j++){
-						var top="-"+160*j+"px";
+						var top="-"+240*j+"px";
 						//alert(top);
-						var left="-"+160*i+"px";
+						var left="-"+240*i+"px";
 						html.push('<td id="box_' + i + "_" + j + '" style="background: url(lulu.jpg) '+top+' '+left+';"></td>');
 					}
 					html.push("</tr>");
@@ -105,7 +105,7 @@
 							var x = document.getElementById("box_"+i+"_"+j).style.backgroundPositionX;
 							var y = document.getElementById("box_"+i+"_"+j).style.backgroundPositionY;
 							console.log(x);
-							if(x==(j*(-160)+"px") && y==(i*(-160)+"px")){
+							if(x==(j*(-240)+"px") && y==(i*(-240)+"px")){
 								continue;
 							}else{
 								return;
