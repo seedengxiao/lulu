@@ -27,8 +27,7 @@
 				html.push('<div id="box_4_0"></div>');
 				var pannel=document.getElementById("pannel");
 				pannel.innerHTML=html.join("");
-				document.getElementById("box_4_0").style.background=document.getElementById("box_3_0").style.background;
-				document.getElementById("box_3_0").style.background="";
+				startGame();
 			}
 			
 			function move(){
@@ -155,12 +154,12 @@
 			document.addEventListener('touchend',endabc,false); 
 			//document.addEventListener('touchmove',touches,false); 
 			function startGame(){
-				for(var i=0;i<20;i++){
+				for(var i=0;i<3;i++){
 					var box1 = "box_"+makeRandom()+"_"+makeRandom();
 					var box2 = "box_"+makeRandom()+"_"+makeRandom();
-					var box = document.getElementById("box1").style.background;
-					document.getElementById("box1").style.background=document.getElementById("box2").style.background;
-					document.getElementById("box2").style.background=box;
+					var box0 = document.getElementById(box1).style.background;
+					document.getElementById(box1).style.background=document.getElementById(box2).style.background;
+					document.getElementById(box2).style.background=box0;
 				}			
 			}
 			function makeRandom(){
