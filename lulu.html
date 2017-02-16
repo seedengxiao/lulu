@@ -27,7 +27,8 @@
 				html.push('<div id="box_3_0"></div>');
 				var pannel=document.getElementById("pannel");
 				pannel.innerHTML=html.join("");
-				startGame();
+				document.getElementById("box_3_0").style.background=document.getElementById("box_2_0").style.background;
+				document.getElementById("box_2_0").style.background="";
 			}
 			
 			function move(){
@@ -114,6 +115,11 @@
 					setTimeout(function(){
 						alert("祝陆露2017年身体健康！天天开心！");
 						alert("其实我还想说：右眉好有型^_^！");
+						if (confirm("要正式挑战吗？")){							
+							startGame();							
+						}else{
+							alert("好吧，真遗憾！");
+						}
 					},0);
 					//alert("成功");
 				}				
