@@ -5,26 +5,26 @@
 		<title>个性化拼图</title>
 		<style type="text/css">
 			table{border-collapse:collapse;}
-			td, #box_4_0{border:1px solid #888; width:240px; height:240px;}
-			td{width:240px; height:240px;}
+			td, #box_3_0{border:1px solid #888; width:320px; height:320px;}
+			td{width:320px; height:320px;}
 		</style>
 		<script type="text/javascript">
 			function init(){
 				//alert("1");
 				var html=[];
 				html.push("<table>");
-				for(var i=0; i < 4; i++){
+				for(var i=0; i < 3; i++){
 					html.push("<tr>");
-					for(var j=0; j < 4; j++){
-						var top="-"+240*j+"px";
+					for(var j=0; j < 3; j++){
+						var top="-"+230*j+"px";
 						//alert(top);
-						var left="-"+240*i+"px";
+						var left="-"+230*i+"px";
 						html.push('<td id="box_' + i + "_" + j + '" style="background: url(lulu.jpg) '+top+' '+left+';"></td>');
 					}
 					html.push("</tr>");
 				}
 				html.push("</table>");
-				html.push('<div id="box_4_0"></div>');
+				html.push('<div id="box_3_0"></div>');
 				var pannel=document.getElementById("pannel");
 				pannel.innerHTML=html.join("");
 				startGame();
@@ -50,8 +50,8 @@
 				success();
 			}
 			function left(){
-				for(var i=0; i < 4; i++){
-					for(var j=0; j < 3; j++){
+				for(var i=0; i < 3; i++){
+					for(var j=0; j < 2; j++){
 						var inner = document.getElementById("box_"+i+"_"+j).style.background;
 						if(!inner){
 							document.getElementById("box_"+i+"_"+j).style.background=document.getElementById("box_"+i+"_"+(j+1)).style.background;
@@ -62,8 +62,8 @@
 				}
 			}
 			function up(){
-				for(var i=0; i < 4; i++){
-					for(var j=0; (j < 4 && i < 4) || (i==3 && j==0); j++){
+				for(var i=0; i < 3; i++){
+					for(var j=0; (j < 3 && i < 3) || (i==2 && j==0); j++){
 						var inner = document.getElementById("box_"+i+"_"+j).style.background;
 						if(!inner){
 							document.getElementById("box_"+i+"_"+j).style.background=document.getElementById("box_"+(i+1)+"_"+j).style.background;
@@ -74,8 +74,8 @@
 				}
 			}
 			function right(){
-				for(var i=0; i < 4; i++){
-					for(var j=1; j < 4; j++){
+				for(var i=0; i < 3; i++){
+					for(var j=1; j < 3; j++){
 						var inner = document.getElementById("box_"+i+"_"+j).style.background;
 						if(!inner){
 							document.getElementById("box_"+i+"_"+j).style.background=document.getElementById("box_"+i+"_"+(j-1)).style.background;
@@ -86,8 +86,8 @@
 				}
 			}
 			function down(){			
-				for(var i=0; i < 5; i++){
-					for(var j=0; (j < 4 && i < 4) || (i==4 && j==0); j++){
+				for(var i=0; i < 4; i++){
+					for(var j=0; (j < 3 && i < 3) || (i==3 && j==0); j++){
 						var inner = document.getElementById("box_"+i+"_"+j).style.background;
 						if(!inner && i-1>=0){
 							document.getElementById("box_"+i+"_"+j).style.background=document.getElementById("box_"+(i-1)+"_"+j).style.background;
@@ -98,13 +98,13 @@
 				}
 			}
 			function success(){
-				if(!document.getElementById("box_4_0").style.background){
-					for(var i=0; i < 4; i++){
-						for(var j=0; j < 4; j++){
+				if(!document.getElementById("box_3_0").style.background){
+					for(var i=0; i < 3; i++){
+						for(var j=0; j < 3; j++){
 							var x = document.getElementById("box_"+i+"_"+j).style.backgroundPositionX;
 							var y = document.getElementById("box_"+i+"_"+j).style.backgroundPositionY;
 							console.log(x);
-							if(x==(j*(-240)+"px") && y==(i*(-240)+"px")){
+							if(x==(j*(-320)+"px") && y==(i*(-320)+"px")){
 								continue;
 							}else{
 								return;
@@ -154,7 +154,7 @@
 			document.addEventListener('touchend',endabc,false); 
 			//document.addEventListener('touchmove',touches,false); 
 			function startGame(){
-				for(var i=0;i<3;i++){
+				for(var i=0;i<2;i++){
 					var box1 = "box_"+makeRandom()+"_"+makeRandom();
 					var box2 = "box_"+makeRandom()+"_"+makeRandom();
 					var box0 = document.getElementById(box1).style.background;
@@ -163,7 +163,7 @@
 				}			
 			}
 			function makeRandom(){
-				return parseInt(4*Math.random());
+				return parseInt(3*Math.random());
 			}
 		</script>
 	</head>
