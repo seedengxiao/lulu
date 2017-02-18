@@ -51,15 +51,19 @@
 				switch(event.keyCode){
 					case 37:
 						left();
+						moveAudio();
 						break;
 					case 38:
 						up();
+						moveAudio();
 						break;
 					case 39:
 						right();
+						moveAudio();
 						break;
 					case 40:
 						down();
+						moveAudio();
 						break;
 					default:
 						break;
@@ -184,7 +188,7 @@
 			document.addEventListener('touchstart',startT,false); 
 			document.addEventListener('touchend',endT,false); 
 			//document.addEventListener('touchmove',touches,false); 
-			//document.addEventListener('keyup',move,false);
+			document.addEventListener('keyup',move,false);
 			
 			function startGame(){
 				down();
@@ -215,7 +219,7 @@
 			}
 		</script>
 	</head>
-	<body onload="init()" onkeydown="move()">
+	<body onload="init()">
 		<div id="pannel"></div>
 		<div id="divStart"></div> 
 		<div id="divMove"></div>
