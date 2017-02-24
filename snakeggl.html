@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="gbk">
-		<title>Ì°³ÔÉß-¹Î¹ÎÀÖ</title>
+		<title>è´ªåƒè›‡-åˆ®åˆ®ä¹</title>
 		<style type="text/css">
 			#pannelBack{width:960px; height:1280px; }
 		</style>		
@@ -17,7 +17,7 @@
 		</div>	
 	</body>
 	<script type="text/javascript">
-			//Ò³ÃæÔªËØ£¬Í¼Æ¬¼ÓÔØ
+			//é¡µé¢å…ƒç´ ï¼Œå›¾ç‰‡åŠ è½½
 			var c=document.getElementById("myCanvas");
 			var ctx=c.getContext("2d");
 			var snake=[{x:2,y:0},{x:1,y:0},{x:0,y:0}];
@@ -88,28 +88,28 @@
 				}				
 			}
 			function gameover(){
-				//alert("ÓÎÏ·½áÊø");
-				setTimeout(function(){alert("ÓÎÏ·½áÊø")},0);
+				//alert("æ¸¸æˆç»“æŸ");
+				setTimeout(function(){alert("æ¸¸æˆç»“æŸ")},0);
 				window.clearInterval(loopMove);
 			}		
-			//ÊÖÖ¸·Åµ½ÆÁÄ»ÉÏÊ±,´¥ÃşµãÏà¶Ôä¯ÀÀÆ÷´°¿ÚµÄÎ»ÖÃ
+			//æ‰‹æŒ‡æ”¾åˆ°å±å¹•ä¸Šæ—¶,è§¦æ‘¸ç‚¹ç›¸å¯¹æµè§ˆå™¨çª—å£çš„ä½ç½®
 			var startX=0;
 			var startY=0;
 			var endX=0;
 			var endY=0;
-			//ÊÖÖ¸·Åµ½ÆÁÄ»ÉÏÊ±´¥·¢
+			//æ‰‹æŒ‡æ”¾åˆ°å±å¹•ä¸Šæ—¶è§¦å‘
 			function startT(ev){
 				startX=ev.touches[0].clientX;
 				startY=ev.touches[0].clientY;
-				divStart.innerHTML='Touch start('+ev.touches[0].clientX+', '+ev.touches[0].clientY+')';
-				ev.preventDefault();  //×èÖ¹³öÏÖ¹ö¶¯Ìõ 
+				//divStart.innerHTML='Touch start('+ev.touches[0].clientX+', '+ev.touches[0].clientY+')';
+				ev.preventDefault();  //é˜»æ­¢å‡ºç°æ»šåŠ¨æ¡ 
 			}
-			//ÊÖÖ¸Àë¿ªÆÁÄ»Ê±´¥·¢
+			//æ‰‹æŒ‡ç¦»å¼€å±å¹•æ—¶è§¦å‘
 			function endT(ev){
 				//alert("touchend");
 				endX=ev.changedTouches[0].clientX;
 				endY=ev.changedTouches[0].clientY;						
-				divEnd.innerHTML='Touch end('+ev.changedTouches[0].clientX+', '+ev.changedTouches[0].clientY+')'; 
+				//divEnd.innerHTML='Touch end('+ev.changedTouches[0].clientX+', '+ev.changedTouches[0].clientY+')'; 
 				doAction();
 			}
 			function doAction(){
@@ -126,7 +126,7 @@
 					direction=DOWN;
 				}	
 			}						
-			//°ó¶¨¼àÌıÊÂ¼ş
+			//ç»‘å®šç›‘å¬äº‹ä»¶
 			document.addEventListener('touchstart',startT,false); 
 			document.addEventListener('touchend',endT,false); 
 			//document.addEventListener('touchmove',moveT,false); 
