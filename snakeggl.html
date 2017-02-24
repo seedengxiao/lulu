@@ -20,17 +20,23 @@
 			//页面元素，图片加载
 			var c=document.getElementById("myCanvas");
 			var ctx=c.getContext("2d");
+			//蛇
 			var snake=[{x:2,y:0},{x:1,y:0},{x:0,y:0}];
 			var LEFT=37;
 			var RIGHT=39;
 			var UP=38;
 			var DOWN=40;
+			//操作方向
 			var direction=RIGHT;
+			//当前蛇的移动方向
+			var currentDirection=RIGHT;
+			//循环移动
 			var loopMove;
+			var fruit={};
 			function init(){
 				ctx.fillStyle="#FFF";
 				ctx.fillRect(0,0,960,1280);
-				
+				//绘制方格
 				for(var i=0;i<13;i++){
 					ctx.moveTo(80*i,0);
 					ctx.lineTo(80*i,1280);
@@ -41,35 +47,38 @@
 					ctx.lineTo(960,80*i);
 					ctx.stroke();
 				}		
-				var picture="ggl_"+(makeRandom(1)+1)+".jpg";
+				var picture="ggl_"+(makeRandom(6)+1)+".jpg";
 				document.getElementById("pannelBack").src=picture;
 				paint(snake);
-				loopMove=window.setInterval(move,500);
+				createFruit();
+				loopMove=window.setInterval(move,400);
 			}
-			function move(){				
+			//移动蛇
+			function move(){	
+				currentDirection=direction;
 				switch(direction){
-					case LEFT :
+					case LEFT:
 						if(snake[0].x - 1 < 0){
 							gameover();
 							return;
 						}					
 						snake.unshift({x:snake[0].x-1,y:snake[0].y});
 						break;
-					case RIGHT :
+					case RIGHT:
 						if(snake[0].x + 1 >= 12){
 							gameover();
 							return;
 						}
 						snake.unshift({x:snake[0].x+1,y:snake[0].y});
 						break;
-					case UP	:
+					case UP:
 						if(snake[0].y - 1 < 0){
 							gameover();
 							return;
 						}
 						snake.unshift({x:snake[0].x,y:snake[0].y-1});
 						break;	
-					case DOWN	:
+					case DOWN:
 						if(snake[0].y + 1 >= 16){
 							gameover();
 							return;
@@ -77,15 +86,37 @@
 						snake.unshift({x:snake[0].x,y:snake[0].y+1});
 						break;
 					}
-				var tail=snake.pop();
-				ctx.clearRect(tail.x*80,tail.y*80,80,80 );
+				var tail=snake[snake.length-1];
+				if(fruit.x!=snake[0].x || fruit.y!=snake[0].y){
+					snake.pop();
+				}else{
+					createFruit();
+				}
+				ctx.clearRect(tail.x*80,tail.y*80,80,80 );								
 				paint(snake);
-			}			
+			}
+			//绘制蛇
 			function paint(snake){
 				ctx.fillStyle='#00F';
 				for(var i=0;i<snake.length;i++){
 					ctx.fillRect(snake[i].x*80,snake[i].y*80,80,80);
 				}				
+			}
+			//创建水果
+			function createFruit(){
+				var cover=false;
+				do{
+					fruit.x=makeRandom(12);
+					fruit.y=makeRandom(16);
+					cover=false;
+					for(var i=0;i<snake.length-1;i++){
+						if(fruit.x==snake[i].x && fruit.y==snake[i].y){
+							cover=ture;
+							break;
+						}
+					}
+				}while(cover);				
+				ctx.fillRect(fruit.x*80,fruit.y*80,80,80);				
 			}
 			function gameover(){
 				//alert("游戏结束");
@@ -112,24 +143,60 @@
 				//divEnd.innerHTML='Touch end('+ev.changedTouches[0].clientX+', '+ev.changedTouches[0].clientY+')'; 
 				doAction();
 			}
+			//判断触屏手指滑动方向
 			function doAction(){
 				if(startX > endX && (startX-endX) > Math.abs(startY-endY)){
-					direction=LEFT;
+					if(currentDirection!=RIGHT){
+						direction=LEFT;
+					}					
 				}
 				if(startY > endY && (startY-endY) > Math.abs(startX-endX)){
-					direction=UP;
+					if(currentDirection!=DOWN){
+						direction=UP;
+					}				
 				}
 				if(startX < endX && (endX-startX) > Math.abs(startY-endY)){
-					direction=RIGHT;
+					if(currentDirection!=LEFT){
+						direction=RIGHT;
+					}				
 				}
 				if(startY < endY && (endY-startY) > Math.abs(startX-endX)){
-					direction=DOWN;
+					if(currentDirection!=UP){
+						direction=DOWN;
+					}					
 				}	
-			}						
+			}
+			//处理键盘事件控制方向
+			function moveByKey(){
+				switch(event.keyCode){
+					case 37:
+						if(currentDirection!=RIGHT){
+							direction=LEFT;
+						}						
+						break;
+					case 38:
+						if(currentDirection!=DOWN){
+							direction=UP;
+						}
+						break;
+					case 39:
+						if(currentDirection!=LEFT){
+							direction=RIGHT;
+						}
+						break;
+					case 40:
+						if(currentDirection!=UP){
+							direction=DOWN;
+						}
+						break;
+					default:
+						break;
+				}											
+			}
 			//绑定监听事件
 			document.addEventListener('touchstart',startT,false); 
 			document.addEventListener('touchend',endT,false); 
-			//document.addEventListener('touchmove',moveT,false); 
+			document.addEventListener('keydown',moveByKey,false); 
 			function makeRandom(n){
 				return parseInt(n*Math.random());
 			}
